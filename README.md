@@ -1,59 +1,176 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Laravel Products CRUD Workshop
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A Laravel web application demonstrating a complete CRUD (Create, Read, Update, Delete) system for managing products. This workshop project showcases Laravel's core features including routing, controllers, models, views, and database migrations.
 
-## About Laravel
+## Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **Product Management**: Full CRUD operations for products
+- **Database Integration**: MySQL database with Eloquent ORM
+- **Form Validation**: Server-side validation for product data
+- **Responsive UI**: Built with TailwindCSS for modern styling
+- **RESTful Routing**: Clean, resourceful URL structure
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Project Structure
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+```
+├── app/
+│   ├── Http/Controllers/
+│   │   └── ProductController.php    # Handles all product operations
+│   └── Models/
+│       └── Product.php              # Eloquent model for products
+├── database/
+│   └── migrations/
+│       └── 2025_11_14_110944_create_products_table.php
+├── resources/views/
+│   └── products/                    # Blade templates for product views
+└── routes/
+    └── web.php                      # Web routes definition
+```
 
-## Learning Laravel
+## Database Schema
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+The `products` table includes the following fields:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- `id` (Primary Key)
+- `name` (string, required) - Product name
+- `description` (text, nullable) - Product description
+- `price` (decimal, required) - Product price (8,2 precision)
+- `quantity` (integer, required) - Available quantity
+- `timestamps` - Created and updated timestamps
 
-## Laravel Sponsors
+## Installation & Setup
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Prerequisites
 
-### Premium Partners
+- PHP >= 8.2
+- Composer
+- Node.js & NPM
+- Database (MySQL/PostgreSQL/SQLite)
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### Steps
+
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd workshop_3
+   ```
+
+2. **Install dependencies**
+   ```bash
+   composer install
+   npm install
+   ```
+
+3. **Environment setup**
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
+
+4. **Configure database**
+   - Edit `.env` file with your database credentials
+   - Create database and run migrations:
+   ```bash
+   php artisan migrate
+   ```
+
+5. **Build assets**
+   ```bash
+   npm run build
+   ```
+
+6. **Start development server**
+   ```bash
+   php artisan serve
+   ```
+
+   Or use the convenient development script:
+   ```bash
+   composer run dev
+   ```
+
+## Available Routes
+
+| Method | URI | Name | Action |
+|--------|-----|------|--------|
+| GET | `/products/index` | `index` | Display all products |
+| GET | `/products/create` | `create` | Show create product form |
+| POST | `/products/store` | `store` | Store new product |
+| GET | `/products/show/{id}` | `show` | Display specific product |
+| GET | `/products/edit/{id}` | `edit` | Show edit product form |
+| PUT | `/products/update/{id}` | `update` | Update product |
+| DELETE | `/products/delete/{id}` | `destroy` | Delete product |
+
+## Usage Examples
+
+### Creating a Product
+
+Navigate to `/products/create` and fill in the form:
+- **Name**: Required, max 255 characters
+- **Description**: Optional text field
+- **Price**: Required numeric value
+- **Quantity**: Required integer
+
+### Managing Products
+
+- **View all products**: Visit `/products/index`
+- **View product details**: Click on any product to see `/products/show/{id}`
+- **Edit product**: Use the edit button to access `/products/edit/{id}`
+- **Delete product**: Use the delete button (requires confirmation)
+
+## Development Commands
+
+### Available Composer Scripts
+
+- `composer run setup` - Complete project setup (install, migrate, build)
+- `composer run dev` - Start development server with hot reload
+- `composer run test` - Run PHPUnit tests
+
+### Useful Artisan Commands
+
+```bash
+# Database operations
+php artisan migrate              # Run migrations
+php artisan migrate:fresh        # Fresh migration with seeding
+php artisan migrate:rollback     # Rollback last migration
+
+# Development
+php artisan serve               # Start development server
+php artisan route:list         # List all routes
+php artisan make:controller     # Create new controller
+php artisan make:model         # Create new model
+php artisan make:migration     # Create new migration
+```
+
+## Technologies Used
+
+- **Backend**: Laravel 12.0
+- **Frontend**: Blade Templates, TailwindCSS 4.0
+- **Build Tool**: Vite 7.0
+- **Database**: Eloquent ORM with migrations
+- **Validation**: Laravel Form Request Validation
+- **Testing**: PHPUnit 11.5
+
+## Learning Objectives
+
+This workshop demonstrates:
+- Laravel MVC architecture
+- RESTful routing and resource controllers
+- Database migrations and Eloquent models
+- Form validation and error handling
+- Blade templating and view composition
+- Asset compilation with Vite
+- TailwindCSS integration
 
 ## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+This is a workshop project for educational purposes. Feel free to experiment with the code and implement additional features like:
+- Image uploads for products
+- Product categories
+- Search and filtering
+- API endpoints
+- Authentication and authorization
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is open-sourced software licensed under the MIT license.
