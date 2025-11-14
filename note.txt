@@ -1,0 +1,4 @@
+-- Laravel Commands
+    [1] Get all Migrate Commands => php artisan
+    [2] ::make Commands => php artisan help make:mode
+    [3] Get
